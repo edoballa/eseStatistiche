@@ -13,16 +13,27 @@ import java.util.Random;
  */
 public class ThGeneraCaratteri extends Thread{
     private char[] caratteri={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','.',' '};
-    private CDatiCondivisi PtrDati;
+    private CDatiCondivisi ptrDati;
     
     public ThGeneraCaratteri(CDatiCondivisi dati) {
-        PtrDati = dati;
+        ptrDati = dati;
     }
     
     public void run() {
-        for(int i = 0; i<PtrDati.getNumCaratteri(); i++) {
+        for(int i = 0; i<ptrDati.getNumCaratteri(); i++) {
             Random rand = new Random();
-            int numRandom = rand.nextInt();
+            int numRandom = rand.nextInt(caratteri.length);
+            
+            ptrDati.setCarEstratto(caratteri[numRandom]);
+            ptrDati.getBuffer().add(String.valueOf(ptrDati.getCarEstratto()));
+            
+            if(ptrDati.getCarEstratto() == '.') {
+                ptrDati.setNumPuntiInseriti(ptrDati.getNumPuntiInseriti()+1);
+            }
+            
+            if(ptrDati.getCarEstratto() == ' ') {
+                ptrDati.setNumSpaziInseriti(ptrDati.getNumSpaziInseriti()+1);
+            }
         }
     }
 }

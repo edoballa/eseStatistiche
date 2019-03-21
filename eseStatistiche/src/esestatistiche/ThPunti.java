@@ -10,9 +10,17 @@ package esestatistiche;
  * @author ballabio_edoardo
  */
 public class ThPunti extends Thread{
-    private CDatiCondivisi PtrDati;
+    private CDatiCondivisi ptrDati;
     
     public ThPunti(CDatiCondivisi dati) {
-        PtrDati = dati;
+        ptrDati = dati;
+    }
+    
+    public void run() {
+        for(int i=0; i<ptrDati.getNumCaratteri(); i++) {
+            if(ptrDati.getCarEstratto() == '.') {
+                ptrDati.setNumPuntiLetti(ptrDati.getNumPuntiLetti() + 1);
+            }
+        }
     }
 }

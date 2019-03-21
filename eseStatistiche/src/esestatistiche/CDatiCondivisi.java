@@ -5,6 +5,8 @@
  */
 package esestatistiche;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ballabio_edoardo
@@ -15,6 +17,8 @@ public class CDatiCondivisi {
     private int numPuntiInseriti;
     private int numSpaziLetti;
     private int numPuntiLetti; 
+    private char carEstratto;
+    private ArrayList<String> buffer;
 
     public CDatiCondivisi(int numCaratteri, int numSpaziInseriti, int numPuntiInseriti, int numSpaziLetti, int numPuntiLetti) {
         this.numCaratteri = numCaratteri;
@@ -30,45 +34,65 @@ public class CDatiCondivisi {
         this.numPuntiInseriti = 0;
         this.numSpaziLetti = 0;
         this.numPuntiLetti = 0;
+        this.carEstratto = '/';
+        buffer = new ArrayList<String>();
     }
 
-    public int getNumCaratteri() {
+    public synchronized int getNumCaratteri() {
         return numCaratteri;
     }
 
-    public void setNumCaratteri(int numCaratteri) {
+    public synchronized void setNumCaratteri(int numCaratteri) {
         this.numCaratteri = numCaratteri;
     }
 
-    public int getNumSpaziInseriti() {
+    public synchronized int getNumSpaziInseriti() {
         return numSpaziInseriti;
     }
 
-    public void setNumSpaziInseriti(int numSpaziInseriti) {
+    public synchronized void setNumSpaziInseriti(int numSpaziInseriti) {
         this.numSpaziInseriti = numSpaziInseriti;
     }
 
-    public int getNumPuntiInseriti() {
+    public synchronized int getNumPuntiInseriti() {
         return numPuntiInseriti;
     }
 
-    public void setNumPuntiInseriti(int numPuntiInseriti) {
+    public synchronized void setNumPuntiInseriti(int numPuntiInseriti) {
         this.numPuntiInseriti = numPuntiInseriti;
     }
 
-    public int getNumSpaziLetti() {
+    public synchronized int getNumSpaziLetti() {
         return numSpaziLetti;
     }
 
-    public void setNumSpaziLetti(int numSpaziLetti) {
+    public synchronized void setNumSpaziLetti(int numSpaziLetti) {
         this.numSpaziLetti = numSpaziLetti;
     }
 
-    public int getNumPuntiLetti() {
+    public synchronized int getNumPuntiLetti() {
         return numPuntiLetti;
     }
 
-    public void setNumPuntiLetti(int numPuntiLetti) {
+    public synchronized void setNumPuntiLetti(int numPuntiLetti) {
         this.numPuntiLetti = numPuntiLetti;
     }
+
+    public synchronized char getCarEstratto() {
+        return carEstratto;
+    }
+
+    public synchronized void setCarEstratto(char carEstratto) {
+        this.carEstratto = carEstratto;
+    }
+
+    public synchronized ArrayList<String> getBuffer() {
+        return buffer;
+    }
+
+    public synchronized void setBuffer(ArrayList<String> buffer) {
+        this.buffer = buffer;
+    }
+    
+    
 }
