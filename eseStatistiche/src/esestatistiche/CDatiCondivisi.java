@@ -6,6 +6,7 @@
 package esestatistiche;
 
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 /**
  *
@@ -19,6 +20,10 @@ public class CDatiCondivisi {
     private int numPuntiLetti; 
     private char carEstratto;
     private ArrayList<String> buffer;
+    private Semaphore sem1;
+    private Semaphore sem2;
+    private Semaphore sem3;
+    private Semaphore sem4;
 
     public CDatiCondivisi(int numCaratteri, int numSpaziInseriti, int numPuntiInseriti, int numSpaziLetti, int numPuntiLetti) {
         this.numCaratteri = numCaratteri;
@@ -36,6 +41,10 @@ public class CDatiCondivisi {
         this.numPuntiLetti = 0;
         this.carEstratto = '/';
         buffer = new ArrayList<String>();
+        sem1 = new Semaphore(1);
+        sem2 = new Semaphore(0);
+        sem3 = new Semaphore(0);
+        sem4 = new Semaphore(0);
     }
 
     public synchronized int getNumCaratteri() {
@@ -94,5 +103,35 @@ public class CDatiCondivisi {
         this.buffer = buffer;
     }
     
+    public void signalSem1() {
+        sem1.release();
+    }
     
+    public void waitSem1() throws InterruptedException {
+        sem1.acquire();
+    }
+    
+    public void signalSem2() {
+        sem2.release();
+    }
+    
+    public void waitSem2() throws InterruptedException {
+        sem2.acquire();
+    }
+    
+    public void signalSem3() {
+        sem3.release();
+    }
+    
+    public void waitSem3() throws InterruptedException {
+        sem3.acquire();
+    }
+    
+    public void signalSem4() {
+        sem4.release();
+    }
+    
+    public void waitSem4() throws InterruptedException {
+        sem4.acquire();
+    }
 }

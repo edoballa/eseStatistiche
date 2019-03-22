@@ -5,6 +5,9 @@
  */
 package esestatistiche;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ballabio_edoardo
@@ -18,8 +21,15 @@ public class ThSpazi extends Thread{
     
     public void run() {
         for(int i=0; i<ptrDati.getNumCaratteri(); i++) {
-            if(ptrDati.getCarEstratto() == ' ') {
-                ptrDati.setNumPuntiLetti(ptrDati.getNumSpaziLetti()+1);
+            try {
+                ptrDati.waitSem3();
+                if(ptrDati.getCarEstratto() == ' ') {
+                    ptrDati.setNumSpaziLetti(ptrDati.getNumSpaziLetti()+1);
+                }
+                ptrDati.signalSem4();
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ThSpazi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

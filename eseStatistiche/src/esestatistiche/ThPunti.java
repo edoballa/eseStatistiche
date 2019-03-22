@@ -5,6 +5,9 @@
  */
 package esestatistiche;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ballabio_edoardo
@@ -18,8 +21,15 @@ public class ThPunti extends Thread{
     
     public void run() {
         for(int i=0; i<ptrDati.getNumCaratteri(); i++) {
-            if(ptrDati.getCarEstratto() == '.') {
-                ptrDati.setNumPuntiLetti(ptrDati.getNumPuntiLetti() + 1);
+            try {
+                ptrDati.waitSem2();
+                if(ptrDati.getCarEstratto() == '.') {
+                    ptrDati.setNumPuntiLetti(ptrDati.getNumPuntiLetti() + 1);
+                }
+                ptrDati.signalSem3();
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ThPunti.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

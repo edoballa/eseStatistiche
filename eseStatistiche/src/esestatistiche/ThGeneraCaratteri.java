@@ -6,6 +6,8 @@
 package esestatistiche;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,18 +23,27 @@ public class ThGeneraCaratteri extends Thread{
     
     public void run() {
         for(int i = 0; i<ptrDati.getNumCaratteri(); i++) {
-            Random rand = new Random();
-            int numRandom = rand.nextInt(caratteri.length);
-            
-            ptrDati.setCarEstratto(caratteri[numRandom]);
-            ptrDati.getBuffer().add(String.valueOf(ptrDati.getCarEstratto()));
-            
-            if(ptrDati.getCarEstratto() == '.') {
-                ptrDati.setNumPuntiInseriti(ptrDati.getNumPuntiInseriti()+1);
-            }
-            
-            if(ptrDati.getCarEstratto() == ' ') {
-                ptrDati.setNumSpaziInseriti(ptrDati.getNumSpaziInseriti()+1);
+            try {
+                Random rand = new Random();
+                int numRandom = rand.nextInt(caratteri.length);
+                
+                ptrDati.waitSem1();
+                
+                ptrDati.setCarEstratto(caratteri[numRandom]);
+                ptrDati.getBuffer().add(String.valueOf(ptrDati.getCarEstratto()));
+                
+                if(ptrDati.getCarEstratto() == '.') {
+                    ptrDati.setNumPuntiInseriti(ptrDati.getNumPuntiInseriti()+1);
+                }
+                
+                if(ptrDati.getCarEstratto() == ' ') {
+                    ptrDati.setNumSpaziInseriti(ptrDati.getNumSpaziInseriti()+1);
+                }
+                
+                ptrDati.signalSem2();
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ThGeneraCaratteri.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

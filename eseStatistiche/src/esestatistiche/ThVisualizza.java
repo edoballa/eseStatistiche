@@ -5,6 +5,9 @@
  */
 package esestatistiche;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ballabio_edoardo
@@ -18,12 +21,18 @@ public class ThVisualizza extends Thread{
     
     public void run() {
         for(int i=0; i<ptrDati.getNumCaratteri(); i++) {
-            System.out.println(" ");
-            System.out.println(ptrDati.getBuffer().toString());
-            System.out.println("Il numero di spazi inseriti è " + ptrDati.getNumSpaziInseriti());
-            System.out.println("Il numero di punti inseriti è " + ptrDati.getNumPuntiInseriti());
-            System.out.println("Il numero di spazi letti è " + ptrDati.getNumSpaziLetti());
-            System.out.println("Il numero di punti letti è " + ptrDati.getNumPuntiLetti());
+            try {
+                ptrDati.waitSem4();
+                System.out.println(" ");
+                System.out.println(ptrDati.getBuffer().toString());
+                System.out.println("Il numero di spazi inseriti è " + ptrDati.getNumSpaziInseriti());
+                System.out.println("Il numero di punti inseriti è " + ptrDati.getNumPuntiInseriti());
+                System.out.println("Il numero di spazi letti è " + ptrDati.getNumSpaziLetti());
+                System.out.println("Il numero di punti letti è " + ptrDati.getNumPuntiLetti());
+                ptrDati.signalSem1();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ThVisualizza.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
